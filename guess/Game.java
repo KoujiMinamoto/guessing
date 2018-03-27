@@ -1,4 +1,5 @@
 import java.util.*;
+import java.lang.Math.*;
 public class Game
 {
 
@@ -80,18 +81,62 @@ public class Game
        int tries = 0;
        int round = 0;
        while (round <= 4){
-           
+       win = false;    
        round = round + 1;
        while (win == false){  //This while loop false the code with in it repeat until win === true
-
-
-         
          Scanner prizeScanner = new Scanner(System.in);
          System.out.print("Guess a number between 1-100 : ");
          guessedNumber = prizeScanner.nextInt();
          pcguess = lucky.getrandomNumber();
+         
+         
+         
          tries = tries + 2; //Increasing the number set in the variable tries by 1
-
+            if (tries > 6){
+            System.out.println("Noone get the one");
+                
+                int pcabs;
+                int youabs;
+                pcabs = Math.abs(pcguess-realGuess);
+                youabs = Math.abs(guessedNumber-realGuess);
+                if(pcabs >= 10&& youabs >= 10 ){
+                    
+                System.out.println("this round all you lose");
+                player.addscore(0);
+                pcscore = pcscore + 0;
+                 
+                whowin = false;    
+                }
+                else
+                if(pcabs > youabs){
+                
+                System.out.println("this round you lose");
+                System.out.println("PC get"+ (10-pcabs));
+                player.addscore(0);
+                pcscore = pcscore + (10-pcabs);
+                 
+                whowin = false;
+                }
+                else if(pcabs == youabs){
+                
+                System.out.println("this round all you win");
+                System.out.println("PC get and you"+ (10-pcabs));
+                player.addscore(10-youabs);
+                pcscore = pcscore + (10-pcabs);
+                
+                whowin = true;
+                }
+                else if(pcabs < youabs){
+                
+                System.out.println("this round you win");
+                System.out.println("you get"+ (10-youabs));
+                player.addscore(10-youabs);
+                pcscore = pcscore + 0;
+                
+                whowin = true;
+                }
+                win = true;
+            }
 
 
             if (guessedNumber == realGuess){
@@ -131,53 +176,9 @@ public class Game
                 //3rd thing guess is compared too.
 
             }
-            else if(tries >= 6){
 
-                System.out.println("Noone get the one");
-                
-                int pcabs;
-                int youabs;
-                pcabs = Math.abs(pcguess-realGuess);
-                youabs = Math.abs(guessedNumber-realGuess);
-                if(pcabs >= 10&& youabs >= 10 ){
-                    
-                System.out.println("this round all you lose");
-                player.addscore(0);
-                pcscore = pcscore + 0;
-                    
-                }
-                else
-                if(pcabs > youabs){
-                
-                System.out.println("this round you lose");
-                System.out.println("PC get"+ (10-pcabs));
-                player.addscore(0);
-                pcscore = pcscore + (10-pcabs);
-            
-                }
-                else if(pcabs == youabs){
-                
-                System.out.println("this round all you win");
-                System.out.println("PC get and you"+ (10-pcabs));
-                player.addscore(10-youabs);
-                pcscore = pcscore + (10-pcabs);
-            
-                }
-                else if(pcabs < youabs){
-                
-                System.out.println("this round you win");
-                System.out.println("you get"+ (10-youabs));
-                player.addscore(10-youabs);
-                pcscore = pcscore + 0;
-            
-                }
-                
-                win = true; 
-                whowin = false;
             }
-
-
-        }
+    }
         System.out.println("You win!");
 
         System.out.println("It took you "+ tries/2 + " tries.");
@@ -191,7 +192,7 @@ public class Game
     }
   
      
-    }
+    
    
     public void rungame()
     {
