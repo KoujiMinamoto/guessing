@@ -5,9 +5,29 @@ public class Player
     private int finalscore ;
     private int spendtimes;
     private int score;
-    
+    private int pcsc;
+    private String guesses = "";
     public Player()
     {
+        
+    }
+    
+    public void addguess(String whowin ,int guess, int round)
+    {
+    
+    guesses = guesses + "/n" + whowin +"in round"+ round + "win, number is" + guess + ".";
+    
+    }
+    
+    public String getguess()
+    {
+        return guesses;
+        
+    }
+    
+    public void addpcscore(int score2)
+    {
+        pcsc = pcsc + score2;
         
     }
     
@@ -17,11 +37,17 @@ public class Player
         
     }
 
-    public int getprizesWon()
+    public int getscore()
     {
         return score;
+        
     }
    
+    public int getpcscore()
+    {
+        return pcsc;
+        
+    }
     
     public void help()
     {
