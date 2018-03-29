@@ -4,6 +4,7 @@ public class Game
 {
 
     Player player ;
+    Player player2 ;
     private boolean isCreated;
     private boolean win;
     private String playerName;
@@ -47,6 +48,11 @@ public class Game
         if(name.trim().isEmpty())
         {
             System.out.println("Error: The Player's name must not be blank!");
+        }
+        else if(name.length() > 8)
+        {
+            System.out.println("Error: The Player's name must in 1-8");
+        
         }
         else
         {
@@ -93,20 +99,32 @@ public class Game
     public void vending()
     {
        int guessedNumber;
-       int pcguess = lucky.getrandomNumber();
-       int realGuess = lucky.getrandomNumber();
        boolean win = false;
        boolean whowin;
        int tries = 0;
        int round = 0;
        int winscore = 0;
+       int high = 100;
+       int low = 0;
        while (round < 4){
+       int pcguess = lucky.getrandomNumber();
+       int realGuess = lucky.getrandomNumber();
+       int first = lucky.getfirstNumber();
        win = false;
-       
+       System.out.println("============Round"+ (round+1) + "=============");
        int ABrandomNumber = lucky.getABrandomNumber();
        round = round + 1;
+       high = 100;
+       low = 0;
        while (win == false){  //This while loop false the code with in it repeat until win === true
          Scanner prizeScanner = new Scanner(System.in);
+         if (first == 1){
+            
+            System.out.println(getplayerName() +"Guess first : ");
+            }
+            else
+            System.out.println("computer Guess first : ");
+            
          System.out.print("Guess a number between 1-100 : ");
          pcguess = lucky.getrandomNumber();
          String sguessedNumber = prizeScanner.nextLine();
@@ -115,16 +133,18 @@ public class Game
          guessedNumber = convertStringtoInt(sguessedNumber);
          
          if (guessedNumber == 999){
-            System.out.println("AB");
+            System.out.println("AB the game, this round end");
             win = true;
-            player.addguess("AB",0,round);
+            player.addguess(999,round);
+            player2.addguess(pcguess,round);
         }
         else
         if(pcguess == ABrandomNumber){
             
-            System.out.println("AB");
+            System.out.println("AB the game, this round end");
             win = true;
-            player.addguess("AB",0,round);
+            player.addguess(guessedNumber,round);
+            player2.addguess(pcguess,round);
             }
             else
             if(guessedNumber >= 1 && guessedNumber <= 100){
@@ -140,39 +160,46 @@ public class Game
                 pcabs = Math.abs(pcguess-realGuess);
                 youabs = Math.abs(guessedNumber-realGuess);
                 if(pcabs >= 10&& youabs >= 10 ){
-                    
+                System.out.println("pc Number is" + pcguess);    
                 System.out.println("this round all you lose");
+                
                 player.addscore(0);
-                player.addpcscore(0);
+                player2.addscore(0);
+                player.addguess(pcguess,round); 
+                player2.addguess(pcguess,round);
                 win = true;
                
                 }
                 else
                 if(pcabs > youabs){
+                System.out.println("pc Number is" + pcguess);
                 System.out.println("this round you win");
                 System.out.println("you get"+ (10-youabs));
                 player.addscore(10-youabs);
-                player.addpcscore(0);
-                player.addguess("you",guessedNumber,round);
+                player2.addscore(0);
+                player.addguess(pcguess,round); 
+                player2.addguess(pcguess,round);
                 win = true;
                 whowin = true;
                 }
                 else if(pcabs == youabs){
-                
+                System.out.println("pc Number is" + pcguess);
                 System.out.println("this round all you win");
                 System.out.println("PC get and you"+ (10-pcabs));
                 player.addscore(10-youabs);
-                player.addpcscore(10-pcabs);
-                player.addguess("you",guessedNumber,round);
-                player.addguess("pc",pcguess,round);
+                player2.addscore(10-pcabs);
+                player.addguess(guessedNumber,round);
+                player2.addguess(pcguess,round);
                 win = true;
                 }
                 else if(pcabs < youabs){
+                System.out.println("pc Number is" + pcguess);
                 System.out.println("this round you lose");
                 System.out.println("PC get"+ (10-pcabs));
                 player.addscore(0);
-                player.addpcscore(10-pcabs);
-                player.addguess("pc",pcguess,round); 
+                player2.addscore(10-pcabs);
+                player.addguess(pcguess,round); 
+                player2.addguess(pcguess,round);
                 whowin = false;
                 win = true;
                 }
@@ -181,6 +208,7 @@ public class Game
 
             else
             if (guessedNumber == realGuess){
+                if (first == 1){
                 switch(tries)
                 {
                 case 2:winscore = 20;
@@ -190,18 +218,9 @@ public class Game
                 case 6:winscore =6;
                 break;
                 }
-                win = true; 
-                whowin = true;
-                System.out.println("this round you win");
-                
-                System.out.println("you get" + winscore);
-                player.addscore(winscore);
-                player.addpcscore(0);
-                player.addguess("you",guessedNumber,round);
-
-            }
-            else if (pcguess == realGuess){
-                switch(tries)
+                }else
+                {
+                    switch(tries)
                 {
                 case 2:winscore = 15;
                 break;
@@ -209,13 +228,49 @@ public class Game
                 break;
                 case 6:winscore =5;
                 break;
+                }   
+                }
+                win = true; 
+                whowin = true;
+                System.out.println("this round you win");
+                System.out.println("pc Number is" + pcguess);
+                System.out.println("you get" + winscore);
+                player.addscore(winscore);
+                player2.addscore(0);
+                player.addguess(pcguess,round); 
+                player2.addguess(pcguess,round);
+
+            }
+            else if (pcguess == realGuess){
+                if (first == 2){
+                switch(tries)
+                {
+                case 2:winscore = 20;
+                break;
+                case 4:winscore = 11;
+                break;
+                case 6:winscore =6;
+                break;
+                }
+                }else
+                {
+                    switch(tries)
+                {
+                case 2:winscore = 15;
+                break;
+                case 4:winscore = 8;
+                break;
+                case 6:winscore =5;
+                break;
+                }   
                 }
                 System.out.println("this round you lose");
-                
+                System.out.println("pc Number is" + pcguess);
                 System.out.println("Pc get" + winscore);
-                player.addpcscore(winscore);
+                player2.addscore(winscore);
                 player.addscore(0);
-                player.addguess("pc",pcguess,round);
+                player.addguess(pcguess,round); 
+                player2.addguess(pcguess,round);
                 win = true; 
                 whowin = false;
 
@@ -224,9 +279,10 @@ public class Game
 
 
             else if(guessedNumber < realGuess){
-
+                low = guessedNumber + 1;
                 System.out.println("Number is to low, tray again");
-
+                System.out.println("pc Number is" + pcguess);
+                System.out.println("Number range is" + low +"_" + high);
                 //2nd thing guess is compared too.
 
             }
@@ -234,9 +290,10 @@ public class Game
 
 
             else if(guessedNumber > realGuess){
-
+                high = guessedNumber - 1;
                 System.out.println("Number is to high, try again");
-
+                System.out.println("pc Number is" + pcguess);
+                System.out.println("Number range is" + low +"_" + high);
                 //3rd thing guess is compared too.
 
             }
@@ -250,6 +307,7 @@ public class Game
         
         }
         tries = 0 ;
+        System.out.println("============Correct Number is"+ realGuess + "=============");
     }
 
     prizeWonSoFar();
@@ -263,12 +321,14 @@ public class Game
     
    public void prizeWonSoFar()
     {
-       System.out.println(player.getguess());
-       System.out.println("PC score is" + player.getpcscore());
+       System.out.println(getplayerName() + "guess is"+ player.getguess() );
+       System.out.println("pc guess is"+ player2.getguess() );
+       
        System.out.println( getplayerName() +"score is" + player.getscore());
-
+       System.out.println("PC score is" + player2.getscore());
        
     }
+    
      private boolean validBlanknumber(String iobuffer) //method to check insert any empties or blanks
     {
         if (iobuffer.matches("[0-9]*"))
@@ -289,6 +349,7 @@ public class Game
            switch(getChoice())
            {
                 case 1: player = new Player();
+                        player2 = new Player();
                         setNewPlayer(); 
                         break;
                 case 2: if(getisCreated())
