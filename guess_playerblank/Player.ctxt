@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=Player
+comment1.params=
+comment1.target=Player()
+comment2.params=
+comment2.target=java.lang.String\ getname()
+comment3.params=newname
+comment3.target=void\ setname(java.lang.String)
+comment4.params=guess
+comment4.target=void\ addguess(java.lang.String)
+comment5.params=
+comment5.target=java.lang.String\ getguess()
+comment6.params=score1
+comment6.target=void\ addscore(int)
+comment7.params=
+comment7.target=int\ getscore()
+numComments=8
