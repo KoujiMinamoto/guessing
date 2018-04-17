@@ -121,7 +121,7 @@ public class Game
        int ABrandomNumber = lucky.getABrandomNumber();
        round = round + 1;
        high = 100;
-       low = 0;
+       low = 1;
        while (win == false){  //This while loop false the code with in it repeat until win === true
          Scanner prizeScanner = new Scanner(System.in);
          if (first == 1){
@@ -137,6 +137,10 @@ public class Game
          while(validBlanknumber(sguessedNumber))
          sguessedNumber = prizeScanner.nextLine();
          guessedNumber = convertStringtoInt(sguessedNumber);
+         if (guessedNumber < low || guessedNumber > high)
+         {
+            System.out.println("Warining: Please enter in the range, but you have no chance to enter again");
+         }
          
          if (guessedNumber == 999){
             System.out.println("AB the game, this round end");
