@@ -101,7 +101,7 @@ public class Game
    
     public void vending()
     {
-       int guessedNumber;
+       
        boolean win = false;
        boolean whowin;
        int tries = 0;
@@ -114,7 +114,8 @@ public class Game
        String uguesses = "";
        String pcguesses = "";
        while (round < 4){
-       int pcguess = lucky.getrandomNumber();
+       int pcguess = 0;
+       int guessedNumber = 0;
        int realGuess = lucky.getrandomNumber();
        int first = lucky.getfirstNumber();
        win = false;
@@ -123,13 +124,86 @@ public class Game
        round = round + 1;
        high = 100;
        low = 1;
+       int pclow = 1;
+       int pchigh = 100;
        while (win == false){  //This while loop false the code with in it repeat until win === true
          Scanner prizeScanner = new Scanner(System.in);
+         tries = tries + 2; 
          if (first == 1){
-            
+          if (tries > 6){
+            System.out.println("Noone get the one");
+                
+                int pcabs;
+                int youabs;
+                pcabs = Math.abs(pcguess-realGuess);
+                youabs = Math.abs(guessedNumber-realGuess);
+                if(pcabs >= 10&& youabs >= 10 ){
+                System.out.println("pc last Number is" + pcguess);
+                System.out.println("you last Number is" + guessedNumber);  
+                System.out.println("this round all you lose");
+                uscore = uscore;
+                pcscore = pcscore;
+                player.addscore(uscore);
+                player2.addscore(pcscore);
+                uguesses = uguesses + "\n" + "in round"+ round + " number is" + guessedNumber + ".";
+                pcguesses = pcguesses + "\n" + "in round"+ round + " number is" + pcguess + ".";
+                player.addguess(uguesses); 
+                player2.addguess(pcguesses);
+                win = true;
+               
+                }
+                else
+                if(pcabs > youabs){
+                System.out.println("pc last Number is" + pcguess);
+                System.out.println("you last Number is" + guessedNumber);
+                System.out.println("this round you win");
+                System.out.println("you get"+ (10-youabs));
+                uscore = uscore+10-youabs;
+                pcscore = pcscore;
+                uguesses = uguesses + "\n" + "in round"+ round + " number is" + guessedNumber + ".";
+                pcguesses = pcguesses + "\n" + "in round"+ round + " number is" + pcguess + ".";
+                player.addscore(uscore);
+                player2.addscore(pcscore);
+                player.addguess(uguesses); 
+                player2.addguess(pcguesses);
+                win = true;
+                whowin = true;
+                }
+                else if(pcabs == youabs){
+                System.out.println("pc last Number is" + pcguess);
+                System.out.println("you last Number is" + guessedNumber);
+                System.out.println("this round all you win");
+                System.out.println("PC get and you"+ (10-pcabs));
+                uscore = uscore+10-youabs;
+                pcscore = pcscore+10-pcabs;
+                uguesses = uguesses + "\n" + "in round"+ round + " number is" + guessedNumber + ".";
+                pcguesses = pcguesses + "\n" + "in round"+ round + " number is" + pcguess + ".";
+                player.addscore(uscore);
+                player2.addscore(pcscore);
+                player.addguess(uguesses); 
+                player2.addguess(pcguesses);
+                win = true;
+                }
+                else if(pcabs < youabs){
+                System.out.println("pc last Number is" + pcguess);
+                System.out.println("you last Number is" + guessedNumber);
+                System.out.println("this round you lose");
+                System.out.println("PC get"+ (10-pcabs));
+                uscore = uscore;
+                pcscore = pcscore+10-pcabs;
+                uguesses = uguesses + "\n" + "in round"+ round + " number is" + guessedNumber + ".";
+                pcguesses = pcguesses + "\n" + "in round"+ round + " number is" + pcguess + ".";
+                player.addscore(uscore);
+                player2.addscore(pcscore);
+                player.addguess(uguesses); 
+                player2.addguess(pcguesses);
+                whowin = false;
+                win = true;
+                }
+                break;
+            }   
          System.out.println(getplayerName() +"Guess first : ");
          System.out.print("Guess a number between 1-100 : ");
-         pcguess = lucky.getrandomNumber();
          String sguessedNumber = prizeScanner.nextLine();
          while(validBlanknumber(sguessedNumber))
          sguessedNumber = prizeScanner.nextLine();
@@ -146,91 +220,10 @@ public class Game
             pcguesses = pcguesses + "\n" + "in round"+ round + " number is" + pcguess + ".";
             player.addguess(uguesses); 
             player2.addguess(pcguesses);
+            break;
         }
         else
-        if(pcguess == ABrandomNumber){
             
-            System.out.println("AB the game, this round end");
-            win = true;
-            uguesses = uguesses + "\n" + "in round"+ round + " number is" + guessedNumber + ".";
-            pcguesses = pcguesses + "\n" + "in round"+ round + " number is" + pcguess + ".";
-            player.addguess(uguesses); 
-            player2.addguess(pcguesses);
-            }
-            else
-            if(guessedNumber >= 1 && guessedNumber <= 100){
-         
-            tries = tries + 2; //Increasing the number set in the variable tries by 1
-            if (tries == 6){
-            System.out.println("Noone get the one");
-                
-                int pcabs;
-                int youabs;
-                pcabs = Math.abs(pcguess-realGuess);
-                youabs = Math.abs(guessedNumber-realGuess);
-                if(pcabs >= 10&& youabs >= 10 ){
-                System.out.println("pc Number is" + pcguess);    
-                System.out.println("this round all you lose");
-                uscore = uscore;
-                pcscore = pcscore;
-                player.addscore(uscore);
-                player2.addscore(pcscore);
-                uguesses = uguesses + "\n" + "in round"+ round + " number is" + guessedNumber + ".";
-                pcguesses = pcguesses + "\n" + "in round"+ round + " number is" + pcguess + ".";
-                player.addguess(uguesses); 
-                player2.addguess(pcguesses);
-                win = true;
-               
-                }
-                else
-                if(pcabs > youabs){
-                System.out.println("pc Number is" + pcguess);
-                System.out.println("this round you win");
-                System.out.println("you get"+ (10-youabs));
-                uscore = uscore+10-youabs;
-                pcscore = pcscore;
-                uguesses = uguesses + "\n" + "in round"+ round + " number is" + guessedNumber + ".";
-                pcguesses = pcguesses + "\n" + "in round"+ round + " number is" + pcguess + ".";
-                player.addscore(uscore);
-                player2.addscore(pcscore);
-                player.addguess(uguesses); 
-                player2.addguess(pcguesses);
-                win = true;
-                whowin = true;
-                }
-                else if(pcabs == youabs){
-                System.out.println("pc Number is" + pcguess);
-                System.out.println("this round all you win");
-                System.out.println("PC get and you"+ (10-pcabs));
-                uscore = uscore+10-youabs;
-                pcscore = pcscore+10-pcabs;
-                uguesses = uguesses + "\n" + "in round"+ round + " number is" + guessedNumber + ".";
-                pcguesses = pcguesses + "\n" + "in round"+ round + " number is" + pcguess + ".";
-                player.addscore(uscore);
-                player2.addscore(pcscore);
-                player.addguess(uguesses); 
-                player2.addguess(pcguesses);
-                win = true;
-                }
-                else if(pcabs < youabs){
-                System.out.println("pc Number is" + pcguess);
-                System.out.println("this round you lose");
-                System.out.println("PC get"+ (10-pcabs));
-                uscore = uscore;
-                pcscore = pcscore+10-pcabs;
-                uguesses = uguesses + "\n" + "in round"+ round + " number is" + guessedNumber + ".";
-                pcguesses = pcguesses + "\n" + "in round"+ round + " number is" + pcguess + ".";
-                player.addscore(uscore);
-                player2.addscore(pcscore);
-                player.addguess(uguesses); 
-                player2.addguess(pcguesses);
-                whowin = false;
-                win = true;
-                }
-                
-            }
-
-            else
             if (guessedNumber == realGuess){
                 
                 switch(tries)
@@ -256,9 +249,44 @@ public class Game
                 player2.addscore(pcscore);
                 player.addguess(uguesses); 
                 player2.addguess(pcguesses);
+                break;
 
             }
-            else if (pcguess == realGuess){
+            
+            else if(guessedNumber < realGuess){
+                low = guessedNumber + 1;
+                System.out.println("Number is to low, tray again");
+                System.out.println("Number range is" + low +"_" + high);
+                //2nd thing guess is compared too.
+
+            }
+
+
+
+            else if(guessedNumber > realGuess){
+                high = guessedNumber - 1;
+                System.out.println("Number is to high, try again");
+                System.out.println("Number range is" + low +"_" + high);
+                //3rd thing guess is compared too.
+
+            }
+            pcguess = lucky.getrandomNumber();
+            if(pcguess == ABrandomNumber){
+            
+            System.out.println("AB the game, this round end");
+            win = true;
+            uguesses = uguesses + "\n" + "in round"+ round + " number is" + guessedNumber + ".";
+            pcguesses = pcguesses + "\n" + "in round"+ round + " number is" + pcguess + ".";
+            player.addguess(uguesses); 
+            player2.addguess(pcguesses);
+            break;
+            }
+            else
+            if (pcguess < pclow || pcguess > pchigh)
+            {
+            System.out.println("Warining: Pc not enter in the range,  have no chance to enter again");
+            }
+            if (pcguess == realGuess){
 
                     switch(tries)
                 {
@@ -283,77 +311,31 @@ public class Game
                 player2.addguess(pcguesses);
                 win = true; 
                 whowin = false;
+                break;
 
             }
-
-
-
-            else if(guessedNumber < realGuess){
-                low = guessedNumber + 1;
-                System.out.println("Number is to low, tray again");
+            else if(pcguess < realGuess){
+                pclow = pcguess + 1;
+                System.out.println("pc Number is to low");
                 System.out.println("pc Number is" + pcguess);
-                System.out.println("Number range is" + low +"_" + high);
-                //2nd thing guess is compared too.
+                System.out.println("pc Number range is" + pclow +"_" + pchigh);            
 
             }
 
 
 
-            else if(guessedNumber > realGuess){
-                high = guessedNumber - 1;
-                System.out.println("Number is to high, try again");
+            else if(pcguess > realGuess){
+                pchigh = pcguess - 1;
+                System.out.println("pc Number is to high");
                 System.out.println("pc Number is" + pcguess);
-                System.out.println("Number range is" + low +"_" + high);
-                //3rd thing guess is compared too.
+                System.out.println("pc Number range is" + pclow +"_" + pchigh);
 
             }
-
-            }
-            else 
-            {
-                System.out.println("Error : only choose 1-100 or 999");
-            }
-            }
-            else
-            {
-            System.out.println("computer Guess first : ");
             
-         System.out.print("Guess a number between 1-100 : ");
-         pcguess = lucky.getrandomNumber();
-         String sguessedNumber = prizeScanner.nextLine();
-         while(validBlanknumber(sguessedNumber))
-         sguessedNumber = prizeScanner.nextLine();
-         guessedNumber = convertStringtoInt(sguessedNumber);
-         if (guessedNumber < low || guessedNumber > high)
-         {
-            System.out.println("Warining: Please enter in the range, but you have no chance to enter again");
-         }
-         
-         if (guessedNumber == 999){
-            System.out.println("AB the game, this round end");
-            win = true;
-            uguesses = uguesses + "\n" + "in round"+ round + " number is" + guessedNumber + ".";
-            pcguesses = pcguesses + "\n" + "in round"+ round + " number is" + pcguess + ".";
-            player.addguess(uguesses); 
-            player2.addguess(pcguesses);
-        }
-        else
-        if(pcguess == ABrandomNumber){
-            
-            System.out.println("AB the game, this round end");
-            win = true;
-            uguesses = uguesses + "\n" + "in round"+ round + " number is" + guessedNumber + ".";
-            pcguesses = pcguesses + "\n" + "in round"+ round + " number is" + pcguess + ".";
-            player.addguess(uguesses); 
-            player2.addguess(pcguesses);
             }
-            else
-            if(guessedNumber >= 1 && guessedNumber <= 100){
-         
-         
-         
-                tries = tries + 2; //Increasing the number set in the variable tries by 1
-            if (tries == 6){
+        else //computer first
+        {
+          if (tries > 6){
             System.out.println("Noone get the one");
                 
                 int pcabs;
@@ -361,7 +343,8 @@ public class Game
                 pcabs = Math.abs(pcguess-realGuess);
                 youabs = Math.abs(guessedNumber-realGuess);
                 if(pcabs >= 10&& youabs >= 10 ){
-                System.out.println("pc Number is" + pcguess);    
+                System.out.println("pc last Number is" + pcguess); 
+                System.out.println("you last Number is" + guessedNumber);
                 System.out.println("this round all you lose");
                 uscore = uscore;
                 pcscore = pcscore;
@@ -376,7 +359,8 @@ public class Game
                 }
                 else
                 if(pcabs > youabs){
-                System.out.println("pc Number is" + pcguess);
+                System.out.println("pc last Number is" + pcguess);
+                System.out.println("you last Number is" + guessedNumber);
                 System.out.println("this round you win");
                 System.out.println("you get"+ (10-youabs));
                 uscore = uscore+10-youabs;
@@ -391,7 +375,8 @@ public class Game
                 whowin = true;
                 }
                 else if(pcabs == youabs){
-                System.out.println("pc Number is" + pcguess);
+                System.out.println("pc last Number is" + pcguess);
+                System.out.println("you last Number is" + guessedNumber);
                 System.out.println("this round all you win");
                 System.out.println("PC get and you"+ (10-pcabs));
                 uscore = uscore+10-youabs;
@@ -405,7 +390,8 @@ public class Game
                 win = true;
                 }
                 else if(pcabs < youabs){
-                System.out.println("pc Number is" + pcguess);
+                System.out.println("pc last Number is" + pcguess);
+                System.out.println("you last Number is" + guessedNumber);
                 System.out.println("this round you lose");
                 System.out.println("PC get"+ (10-pcabs));
                 uscore = uscore;
@@ -419,9 +405,24 @@ public class Game
                 whowin = false;
                 win = true;
                 }
-                
+                break;
+            }   
+         System.out.println("computer Guess first : ");
+         pcguess = lucky.getrandomNumber();
+         if(pcguess == ABrandomNumber){
+            
+            System.out.println("AB the game, this round end");
+            win = true;
+            uguesses = uguesses + "\n" + "in round"+ round + " number is" + guessedNumber + ".";
+            pcguesses = pcguesses + "\n" + "in round"+ round + " number is" + pcguess + ".";
+            player.addguess(uguesses); 
+            player2.addguess(pcguesses);
+            break;
             }
-            else if (pcguess == realGuess){
+            
+
+        else
+         if (pcguess == realGuess){
                 switch(tries)
                 {
                 case 2:winscore = 20;
@@ -445,9 +446,47 @@ public class Game
                 player2.addguess(pcguesses);
                 win = true; 
                 whowin = false;
+                break;
+            }
+            else if(pcguess < realGuess){
+                pclow = pcguess + 1;
+                System.out.println("pc Number is to low");
+                System.out.println("pc Number is" + pcguess);
+                System.out.println("pc Number range is" + pclow +"_" + pchigh);            
 
             }
-            else
+
+
+
+            else if(pcguess > realGuess){
+                pchigh = pcguess - 1;
+                System.out.println("pc Number is to high");
+                System.out.println("pc Number is" + pcguess);
+                System.out.println("pc Number range is" + pclow +"_" + pchigh);
+
+            }
+         
+         System.out.print("Guess a number between 1-100 : ");
+         String sguessedNumber = prizeScanner.nextLine();
+         while(validBlanknumber(sguessedNumber))
+         sguessedNumber = prizeScanner.nextLine();
+         guessedNumber = convertStringtoInt(sguessedNumber);
+         if (guessedNumber < low || guessedNumber > high)
+         {
+            System.out.println("Warining: Please enter in the range, but you have no chance to enter again");
+         }
+         
+         
+            
+            if (guessedNumber == 999){
+            System.out.println("AB the game, this round end");
+            win = true;
+            uguesses = uguesses + "\n" + "in round"+ round + " number is" + guessedNumber + ".";
+            pcguesses = pcguesses + "\n" + "in round"+ round + " number is" + pcguess + ".";
+            player.addguess(uguesses); 
+            player2.addguess(pcguesses);
+            
+          }
             if (guessedNumber == realGuess){
                
                 switch(tries)
@@ -473,13 +512,13 @@ public class Game
                 player2.addscore(pcscore);
                 player.addguess(uguesses); 
                 player2.addguess(pcguesses);
+                break;
 
             }
 
             else if(guessedNumber < realGuess){
                 low = guessedNumber + 1;
                 System.out.println("Number is to low, tray again");
-                System.out.println("pc Number is" + pcguess);
                 System.out.println("Number range is" + low +"_" + high);
                 //2nd thing guess is compared too.
 
@@ -490,17 +529,12 @@ public class Game
             else if(guessedNumber > realGuess){
                 high = guessedNumber - 1;
                 System.out.println("Number is to high, try again");
-                System.out.println("pc Number is" + pcguess);
                 System.out.println("Number range is" + low +"_" + high);
                 //3rd thing guess is compared too.
 
             }
 
-            }
-        else 
-        {
-        System.out.println("Error : only choose 1-100 or 999");
-        }
+  
         
     }
         }

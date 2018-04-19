@@ -8,17 +8,17 @@ public class LuckyGuessGenerator
     public void GenerateRandomNumber()
     {
        Random randomObject = new Random();
-       randomNumber = randomObject.nextInt(99) + 1;
+       randomNumber = randomObject.nextInt(100) + 1;
     }
     public void ABRandomNumber()
     {
        Random randomObject = new Random();
-       ABrandomNumber = randomObject.nextInt(19) + 1;
+       ABrandomNumber = randomObject.nextInt(20) + 1;
     }
     public void firstNumber()
     {
        Random randomObject = new Random();
-       firstNumber = randomObject.nextInt(1) + 1;
+       firstNumber = randomObject.nextInt(2) + 1;
     }
     public int getrandomNumber()
     {
