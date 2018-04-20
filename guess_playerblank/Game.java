@@ -205,7 +205,9 @@ public class Game
          System.out.println(getplayerName() +"Guess first : ");
          System.out.print("Guess a number between 1-100 : ");
          String sguessedNumber = prizeScanner.nextLine();
-         while(validBlanknumber(sguessedNumber))
+         while(validBlanknumber(sguessedNumber)) 
+         sguessedNumber = prizeScanner.nextLine();
+         while(validnumber(sguessedNumber))
          sguessedNumber = prizeScanner.nextLine();
          guessedNumber = convertStringtoInt(sguessedNumber);
          if (guessedNumber < low || guessedNumber > high)
@@ -468,7 +470,9 @@ public class Game
          
          System.out.print("Guess a number between 1-100 : ");
          String sguessedNumber = prizeScanner.nextLine();
-         while(validBlanknumber(sguessedNumber))
+         while(validBlanknumber(sguessedNumber)) 
+         sguessedNumber = prizeScanner.nextLine();
+         while(validnumber(sguessedNumber))
          sguessedNumber = prizeScanner.nextLine();
          guessedNumber = convertStringtoInt(sguessedNumber);
          if (guessedNumber < low || guessedNumber > high)
@@ -570,7 +574,15 @@ public class Game
         System.out.println("Error:   should be number!...Please enter again:");
         return true;
     }
-    
+    private boolean validnumber(String iobuffer) //method to check insert any empties or blanks
+    {
+        if ((convertStringtoInt(iobuffer) <= 100 && convertStringtoInt(iobuffer) >= 1)|| (convertStringtoInt(iobuffer) == 999))
+        {
+            return false;
+        }
+        System.out.println("Error:   should be in 1-100 number!...Please enter again:");
+        return true;
+    }
         public void help()
     {
         System.out.println("Welcome to Guessing Game");
